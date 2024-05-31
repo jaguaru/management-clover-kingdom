@@ -25,6 +25,6 @@ class Database:
 
 
 # Database configuration
-DATABASE_URL = "postgresql://jaguaru:Jaguar12345@localhost/magic_academy_db"
+DATABASE_URL = "postgresql://jaguaru:Jaguar12345@localhost/magic_kingdom_db"
 
 db = Database(DATABASE_URL)
