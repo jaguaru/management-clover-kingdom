@@ -11,6 +11,17 @@ router = APIRouter()
 @router.post("/solicitud/", response_model=schema.Solicitud)
 def create_solicitud(solicitud: schema.SolicitudCreate, db: Session = Depends(get_db)):
 
+    existing_solicitud = crud.get_solicitud_by_identificacion(
+        db=db, 
+        identificacion=solicitud.identificacion
+    )
+
+    if existing_solicitud:
+        return JSONResponse(
+            status_code=400,
+            content={"message": "The request with this identification number already exists!"}
+        )
+
     try:
         db_solicitud = crud.create_solicitud(db=db, solicitud=solicitud)
         return JSONResponse(
