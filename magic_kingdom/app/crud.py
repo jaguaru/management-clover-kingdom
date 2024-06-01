@@ -7,11 +7,11 @@ def get_solicitud_by_identificacion(db: Session, identificacion: str):
 
 
 def create_solicitud(db: Session, solicitud: schema.SolicitudCreate):
-    db_solicitud = models.Solicitud(**solicitud.dict())
-    db.add(db_solicitud)
+    create_db_solicitud = models.Solicitud(**solicitud.dict())
+    db.add(create_db_solicitud)
     db.commit()
-    db.refresh(db_solicitud)
-    return db_solicitud
+    db.refresh(create_db_solicitud)
+    return create_db_solicitud
 
 
 def get_solicitud(db: Session, solicitud_id: int):
