@@ -51,7 +51,7 @@ def assign_grimorio(db: Session, solicitud_id: int):
     types = [g["tipo_trebol"] for g in grimorios]
     shields = [g["escudo"] for g in grimorios]
 
-    selected_type = random.choices(types, shields=shields, k=1)[0]
+    selected_type = random.choices(types, weights=shields, k=1)[0]
 
     selected_grimorio = next(filter(lambda g: g["tipo_trebol"] == selected_type, grimorios))
 
