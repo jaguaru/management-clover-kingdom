@@ -68,3 +68,31 @@ def update_solicitud(solicitud_id: int, solicitud: schema.SolicitudCreate, db: S
             status_code=400,
             content={"message": "Could not add this request!", "error": _except}
         )
+
+
+@router.patch("/solicitud/{solicitud_id}/estatus", response_model=schema.Solicitud)
+def update_estado_solicitud(solicitud_id: int, estatus: str, db: Session = Depends(get_db)):
+    
+    get_solicitud_by_id = crud.get_solicitud(db, solicitud_id=solicitud_id)
+    
+    if get_solicitud_by_id is None:
+        return JSONResponse(
+            status_code=404,
+            content={"message": "Could not find ID Solicitud!"}
+        )
+    
+    try:
+        update_status_db_solicitud = crud.update_estatus_solicitud(db=db, solicitud_id=solicitud_id, estatus=estatus)
+        return JSONResponse(
+            status_code=201,
+            content={
+                "message": "Estatus updated successfully!", 
+                "solicitud_id": update_status_db_solicitud.id
+            }
+        )
+
+    except Exception as _except:
+        return JSONResponse(
+            status_code=400,
+            content={"message": "Could not add this request!", "error": _except}
+        )
