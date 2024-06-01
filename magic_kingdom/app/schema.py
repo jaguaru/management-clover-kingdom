@@ -62,6 +62,7 @@ class SolicitudCreate(SolicitudBase):
 class Solicitud(SolicitudBase):
     id: int
     estatus: str
+    grimorios: List[Grimorio] = []
 
     class Config:
         orm_mode = True
