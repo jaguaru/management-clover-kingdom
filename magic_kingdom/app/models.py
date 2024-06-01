@@ -18,7 +18,7 @@ class Solicitud(db.Base):
     estatus = Column(String, default="pendiente")
 
 
-class Grimorio(Base):
+class Grimorio(db.Base):
     """
     Represents the Grimorio table in the database.
     """
