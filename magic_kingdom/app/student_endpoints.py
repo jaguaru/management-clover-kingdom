@@ -39,7 +39,7 @@ def create_solicitud(solicitud: schema.SolicitudCreate, db: Session = Depends(ge
     except Exception as _except:
         return JSONResponse(
             status_code=400,
-            content={"message": "Could not add this request!", "error": _except}
+            content={"message": "Could not add this request!", "error": str(_except)}
         )
 
 
