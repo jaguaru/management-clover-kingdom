@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from . import models, schema
 
 
-def create_solicitud(db: Session, solicitud: schemas.SolicitudCreate):
+def create_solicitud(db: Session, solicitud: schema.SolicitudCreate):
     db_solicitud = models.Solicitud(**solicitud.dict())
     db.add(db_solicitud)
     db.commit()
