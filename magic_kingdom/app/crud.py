@@ -21,7 +21,7 @@ def create_solicitud(db: Session, solicitud: schema.SolicitudCreate):
     db.commit()
     db.refresh(create_db_solicitud)
 
-    assign_grimorio(db, db_solicitud.id)
+    assign_grimorio(db, create_db_solicitud.id)
 
     return create_db_solicitud
 
