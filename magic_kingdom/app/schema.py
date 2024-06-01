@@ -14,7 +14,7 @@ class AfinidadMagica(str, Enum):
 class SolicitudBase(BaseModel):
     nombre: str
     apellido: str
-    identificacion: constr(max_length=10)
+    identificacion: str
     edad: int = Field(..., ge=10, le=99)
     afinidad_magica: AfinidadMagica
 
@@ -23,6 +23,12 @@ class SolicitudBase(BaseModel):
         assert str_value.isalpha(), 'must contain only letters'
         assert 5 <= len(str_value) <= 20, 'must be between 5 and 20 characters'
         return str_value
+
+    @validator('identificacion')
+    def identificacion_must_be_alphanumeric(cls, id_value):
+        assert id_value.isalnum(), 'must contain only letters and numbers'
+        assert 5 <= len(id_value) <= 10, 'must be between 5 and 10 characters or less'
+        return id_value
 
 
 class SolicitudCreate(SolicitudBase):
