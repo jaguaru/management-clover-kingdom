@@ -54,3 +54,14 @@ def update_estatus_solicitud(db: Session, solicitud_id: int, estatus: str):
         db.commit()
         db.refresh(update_status_db_solicitud)
     return update_status_db_solicitud
+
+
+def delete_solicitud(db: Session, solicitud_id: int):
+    """
+    Deletes a student Solicitud from the database.
+    """
+    delete_db_solicitud = get_solicitud(db, solicitud_id)
+    if delete_db_solicitud:
+        db.delete(delete_db_solicitud)
+        db.commit()
+    return delete_db_solicitud
