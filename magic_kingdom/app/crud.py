@@ -30,3 +30,13 @@ def update_solicitud(db: Session, solicitud_id: int, solicitud: schema.Solicitud
         db.commit()
         db.refresh(update_db_solicitud)
     return update_db_solicitud
+
+
+def update_estatus_solicitud(db: Session, solicitud_id: int, estatus: str):
+    """Update the status of an existing solicitud in the database."""
+    update_status_db_solicitud = get_solicitud(db, solicitud_id)
+    if update_status_db_solicitud:
+        update_status_db_solicitud.estatus = estatus
+        db.commit()
+        db.refresh(update_status_db_solicitud)
+    return update_status_db_solicitud
