@@ -55,7 +55,7 @@ def assign_grimorio(db: Session, solicitud_id: int):
 
     selected_grimorio = next(filter(lambda g: g["tipo_trebol"] == selected_type, grimorios))
 
-    grimorio_data = schemas.GrimorioCreate(
+    grimorio_data = schema.GrimorioCreate(
         tipo_trebol=selected_grimorio["tipo_trebol"],
         rareza=selected_grimorio["rareza"],
         magia=selected_grimorio["magia"],
