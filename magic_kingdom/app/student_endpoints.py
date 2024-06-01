@@ -12,7 +12,7 @@ router = APIRouter()
 @router.post("/solicitud/", response_model=schema.Solicitud)
 def create_solicitud(solicitud: schema.SolicitudCreate, db: Session = Depends(get_db)):
     """
-    Create a new student application request.
+    Create a new student Solicitud request.
     """
 
     existing_solicitud = crud.get_solicitud_by_identificacion(
