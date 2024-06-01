@@ -46,3 +46,4 @@ class Solicitud(SolicitudBase):
 
     class Config:
         orm_mode = True
+        from_attributes = True
