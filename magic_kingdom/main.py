@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 import uvicorn
+from app.student_endpoints import router as solicitud_router
 
 
 app = FastAPI()
+
+app.include_router(solicitud_router, prefix="/api")
 
 
 if __name__ == "__main__":
