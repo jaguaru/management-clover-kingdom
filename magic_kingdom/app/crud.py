@@ -23,6 +23,14 @@ def create_solicitud(db: Session, solicitud: schema.SolicitudCreate):
     return create_db_solicitud
 
 
+def create_grimorio(db: Session, grimorio: schema.GrimorioCreate, solicitud_id: int):
+    create_db_grimorio = models.Grimorio(**grimorio.dict(), solicitud_id=solicitud_id)
+    db.add(create_db_grimorio)
+    db.commit()
+    db.refresh(create_db_grimorio)
+    return create_db_grimorio
+
+
 def get_solicitud(db: Session, solicitud_id: int):
     """Get a solicitud by its ID."""
     return db.query(models.Solicitud).filter(models.Solicitud.id == solicitud_id).first()
