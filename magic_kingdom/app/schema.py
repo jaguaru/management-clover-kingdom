@@ -11,6 +11,25 @@ class AfinidadMagica(str, Enum):
     tierra = 'Tierra'
 
 
+class GrimorioBase(BaseModel):
+    tipo_trebol: str
+    rareza: str
+    magia: str
+    escudo: int
+
+
+class GrimorioCreate(GrimorioBase):
+    pass
+
+
+class Grimorio(GrimorioBase):
+    id: int
+    solicitud_id: int
+
+    class Config:
+        orm_mode = True
+
+
 class SolicitudBase(BaseModel):
     nombre: str
     apellido: str
