@@ -111,13 +111,13 @@ def read_solicitudes(skip: int = 0, limit: int = 100, db: Session = Depends(get_
                 content={"message": "Solicitudes not found!"}
             )
         
-        solicitudes_dict = [to_dict(solicitud) for solicitud in get_all_db_solicitudes]
+        solicitudes_dict = [crud.to_dict(solicitud) for solicitud in get_all_db_solicitudes]
 
         return JSONResponse(
             status_code=201,
             content={
                 "message": "Solicitudes retrieved successfully!", 
-                "solicitudes": solicitudes_list
+                "solicitudes": solicitudes_dict
             }
         )
 
