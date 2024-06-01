@@ -7,6 +7,6 @@ from .database import get_db
 router = APIRouter()
 
 
-@router.post("/solicitud/", response_model=schemas.Solicitud)
-def create_solicitud(solicitud: schemas.SolicitudCreate, db: Session = Depends(get_db)):
+@router.post("/solicitud/", response_model=schema.Solicitud)
+def create_solicitud(solicitud: schema.SolicitudCreate, db: Session = Depends(get_db)):
     return crud.create_solicitud(db=db, solicitud=solicitud)
