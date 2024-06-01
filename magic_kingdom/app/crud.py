@@ -17,6 +17,7 @@ def create_solicitud(db: Session, solicitud: schema.SolicitudCreate):
 
 
 def get_solicitud(db: Session, solicitud_id: int):
+    """Get a solicitud by its ID."""
     return db.query(models.Solicitud).filter(models.Solicitud.id == solicitud_id).first()
 
 
