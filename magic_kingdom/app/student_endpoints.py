@@ -145,31 +145,36 @@ def read_asignaciones(skip: int = 0, limit: int = 100, db: Session = Depends(get
 
     try:
         get_all_db_solicitudes = crud.get_solicitudes(db=db, skip=skip, limit=limit)
+        print(' ----  get_all_db_solicitudes  ', get_all_db_solicitudes)
         
-        if not solicitudes:
+        if not get_all_db_solicitudes:
             return JSONResponse(
                 status_code=200,
-                content={"message": "No asignaciones found!"}
+                content={"message": "Asignaciones  not found!"}
             )
         
-        result = []
-        for solicitud in get_all_db_solicitudes:
-            grimorios = db.query(models.Grimorio).filter(models.Grimorio.solicitud_id == solicitud.id).all()
-            result.append({
-                "id": solicitud.id,
-                "identificacion": solicitud.identificacion,
-                "grimorios": grimorios
-            })
+        #solicitudes_dict = [crud.to_dict(solicitud) for solicitud in get_all_db_solicitudes]
+        #print(' ----  solicitudes_dict  ', solicitudes_dict)
+
+        #result = []
+        #for solicitud in get_all_db_solicitudes:
+        #    #grimorios = db.query(models.Grimorio).filter(models.Grimorio.solicitud_id == solicitud.id).all()
+        #    get_grimorios = crud.get_grimorios(db=db, solicitud_id=solicitud.id)
+        #    result.append({
+        #        "id": solicitud.id,
+        #        "identificacion": solicitud.identificacion,
+        #        "grimorios": get_grimorios
+        #    })
         
         return JSONResponse(
             status_code=200,
             content=result
         )
 
-    except Exception as e:
+    except Exception as _except:
         return JSONResponse(
             status_code=500,
-            content={"message": "An error occurred while fetching Asignaciones", "error": str(e)}
+            content={"message": "An error occurred while fetching Asignaciones", "error": str(_except)}
         )
 
 

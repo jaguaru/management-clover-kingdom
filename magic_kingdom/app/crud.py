@@ -73,6 +73,14 @@ def get_solicitudes(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Solicitud).offset(skip).limit(limit).all()
 
 
+def get_grimorios_by_solicitud_id(db: Session, solicitud_id: int):
+    """
+    Retrieve a list of Grimorios from the database with optional pagination.
+    """
+    #return db.query(models.Solicitud).offset(skip).limit(limit).all()
+    return db.query(models.Grimorio).filter(models.Grimorio.solicitud_id == solicitud.id).all()
+
+
 def update_solicitud(db: Session, solicitud_id: int, solicitud: schema.SolicitudCreate):
     """Update an existing solicitud in the database."""
     update_db_solicitud = get_solicitud(db, solicitud_id)
