@@ -139,6 +139,9 @@ def read_solicitudes(skip: int = 0, limit: int = 100, db: Session = Depends(get_
 
 @router.delete("/solicitud/{solicitud_id}", response_model=schema.Solicitud)
 def delete_solicitud(solicitud_id: int, db: Session = Depends(get_db)):
+    """
+    Delete existing student Solicitud.
+    """
 
     get_solicitud_by_id = crud.get_solicitud(db, solicitud_id=solicitud_id)
     
