@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Enum
-from database import db
+from .database import db
 
 
 class Solicitud(db.Base):
