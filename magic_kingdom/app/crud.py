@@ -4,7 +4,7 @@ from . import models, schema
 
 def to_dict(obj):
     """
-    Convierte un objeto SQLAlchemy en un diccionario.
+    Converts a SQLAlchemy object to a dictionary.
     """
     return {c.name: getattr(obj, c.name) for c in obj.__table__.columns}
 
