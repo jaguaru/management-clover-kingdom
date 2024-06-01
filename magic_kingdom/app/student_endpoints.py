@@ -76,6 +76,9 @@ def update_solicitud(solicitud_id: int, solicitud: schema.SolicitudCreate, db: S
 
 @router.patch("/solicitud/{solicitud_id}/estatus", response_model=schema.Solicitud)
 def update_estado_solicitud(solicitud_id: int, estatus: str, db: Session = Depends(get_db)):
+    """
+    Update student estatus Solicitud.
+    """
     
     get_solicitud_by_id = crud.get_solicitud(db, solicitud_id=solicitud_id)
     
