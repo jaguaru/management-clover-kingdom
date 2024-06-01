@@ -78,7 +78,7 @@ def get_grimorios_by_solicitud_id(db: Session, solicitud_id: int):
     Retrieve a list of Grimorios from the database with optional pagination.
     """
     #return db.query(models.Solicitud).offset(skip).limit(limit).all()
-    return db.query(models.Grimorio).filter(models.Grimorio.solicitud_id == solicitud.id).all()
+    return db.query(models.Grimorio).filter(models.Grimorio.solicitud_id == solicitud_id.id).all()
 
 
 def update_solicitud(db: Session, solicitud_id: int, solicitud: schema.SolicitudCreate):
