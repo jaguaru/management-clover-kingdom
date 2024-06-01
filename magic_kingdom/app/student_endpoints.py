@@ -45,6 +45,9 @@ def create_solicitud(solicitud: schema.SolicitudCreate, db: Session = Depends(ge
 
 @router.put("/solicitud/{solicitud_id}", response_model=schema.Solicitud)
 def update_solicitud(solicitud_id: int, solicitud: schema.SolicitudCreate, db: Session = Depends(get_db)):
+    """
+    Update existing student Solicitud request.
+    """
 
     get_solicitud_by_id = crud.get_solicitud(db, solicitud_id=solicitud_id)
 
