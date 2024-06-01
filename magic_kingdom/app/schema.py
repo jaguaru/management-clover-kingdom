@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, constr
+from pydantic import BaseModel, Field, constr, validator
 from enum import Enum
 
 
@@ -12,11 +12,17 @@ class AfinidadMagica(str, Enum):
 
 
 class SolicitudBase(BaseModel):
-    nombre: constr(max_length=20)
-    apellido: constr(max_length=20)
+    nombre: str
+    apellido: str
     identificacion: constr(max_length=10)
     edad: int = Field(..., ge=10, le=99)
     afinidad_magica: AfinidadMagica
+
+    @validator('nombre', 'apellido')
+    def name_must_be_letters(cls, str_value):
+        assert str_value.isalpha(), 'must contain only letters'
+        assert 5 <= len(str_value) <= 20, 'must be between 5 and 20 characters'
+        return str_value
 
 
 class SolicitudCreate(SolicitudBase):
