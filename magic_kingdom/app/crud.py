@@ -22,6 +22,9 @@ def get_solicitud(db: Session, solicitud_id: int):
 
 
 def get_solicitudes(db: Session, skip: int = 0, limit: int = 100):
+    """
+    Retrieve a list of Solicitudes from the database with optional pagination.
+    """
     return db.query(models.Solicitud).offset(skip).limit(limit).all()
 
 
