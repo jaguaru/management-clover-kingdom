@@ -96,3 +96,29 @@ def update_estado_solicitud(solicitud_id: int, estatus: str, db: Session = Depen
             status_code=400,
             content={"message": "Could not add this request!", "error": _except}
         )
+
+
+@router.get("/solicitudes/", response_model=list[schema.Solicitud])
+def read_solicitudes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+
+    try:
+        get_all_db_solicitudes = crud.get_solicitudes(db=db, skip=skip, limit=limit)
+        
+        if not get_all_db_solicitudes:
+            return JSONResponse(
+                status_code=200,
+                content={"message": "Solicitudes not found!"}
+            )
+        
+        solicitudes_list = [schema.Solicitud.from_orm(solicitud).dict() for solicitud in get_all_db_solicitudes]
+                
+        return JSONResponse(
+            status_code=200,
+            content=solicitudes_list
+        )
+
+    except Exception as _except:
+        return JSONResponse(
+            status_code=500,
+            content={"message": "An error occurred while fetching Solicitudes", "error": str(_except)}
+        )
