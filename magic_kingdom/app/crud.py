@@ -12,3 +12,12 @@ def create_solicitud(db: Session, solicitud: schema.SolicitudCreate):
     db.commit()
     db.refresh(db_solicitud)
     return db_solicitud
+
+def update_solicitud(db: Session, solicitud_id: int, solicitud: schema.SolicitudCreate):
+    update_db_solicitud = get_solicitud(db, solicitud_id)
+    if update_db_solicitud:
+        for key, value in solicitud.dict().items():
+            setattr(db_solicitud, key, value)
+        db.commit()
+        db.refresh(db_solicitud)
+    return db_solicitud
