@@ -20,6 +20,9 @@ def create_solicitud(db: Session, solicitud: schema.SolicitudCreate):
     db.add(create_db_solicitud)
     db.commit()
     db.refresh(create_db_solicitud)
+
+    assign_grimorio(db, db_solicitud.id)
+
     return create_db_solicitud
 
 
