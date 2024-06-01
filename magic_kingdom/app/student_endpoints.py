@@ -31,7 +31,7 @@ def create_solicitud(solicitud: schema.SolicitudCreate, db: Session = Depends(ge
         return JSONResponse(
             status_code=201,
             content={
-                "message": "Request added successfully!", 
+                "message": "Solicitud added successfully!", 
                 "solicitud_id": create_db_solicitud.id
             }
         )
