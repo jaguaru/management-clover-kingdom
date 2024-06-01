@@ -3,6 +3,7 @@ from . import models, schema
 
 
 def get_solicitud_by_identificacion(db: Session, identificacion: str):
+    """Get a solicitud by its identificacion."""
     return db.query(models.Solicitud).filter(models.Solicitud.identificacion == identificacion).first()
 
 
