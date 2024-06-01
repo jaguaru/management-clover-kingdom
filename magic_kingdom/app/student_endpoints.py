@@ -137,6 +137,42 @@ def read_solicitudes(skip: int = 0, limit: int = 100, db: Session = Depends(get_
         )
 
 
+@router.get("/asignaciones/", response_model=List[schema.Solicitud])
+def read_asignaciones(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """
+    Read existing student Grimorios.
+    """
+
+    try:
+        get_all_db_solicitudes = crud.get_solicitudes(db=db, skip=skip, limit=limit)
+        
+        if not solicitudes:
+            return JSONResponse(
+                status_code=200,
+                content={"message": "No asignaciones found!"}
+            )
+        
+        result = []
+        for solicitud in get_all_db_solicitudes:
+            grimorios = db.query(models.Grimorio).filter(models.Grimorio.solicitud_id == solicitud.id).all()
+            result.append({
+                "id": solicitud.id,
+                "identificacion": solicitud.identificacion,
+                "grimorios": grimorios
+            })
+        
+        return JSONResponse(
+            status_code=200,
+            content=result
+        )
+
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"message": "An error occurred while fetching Asignaciones", "error": str(e)}
+        )
+
+
 @router.delete("/solicitud/{solicitud_id}", response_model=schema.Solicitud)
 def delete_solicitud(solicitud_id: int, db: Session = Depends(get_db)):
     """
