@@ -13,6 +13,11 @@ def create_solicitud(db: Session, solicitud: schema.SolicitudCreate):
     db.refresh(db_solicitud)
     return db_solicitud
 
+
+def get_solicitud(db: Session, solicitud_id: int):
+    return db.query(models.Solicitud).filter(models.Solicitud.id == solicitud_id).first()
+
+
 def update_solicitud(db: Session, solicitud_id: int, solicitud: schema.SolicitudCreate):
     update_db_solicitud = get_solicitud(db, solicitud_id)
     if update_db_solicitud:
