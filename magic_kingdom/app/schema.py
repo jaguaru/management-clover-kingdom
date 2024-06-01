@@ -15,7 +15,7 @@ class SolicitudBase(BaseModel):
     nombre: str
     apellido: str
     identificacion: str
-    edad: int = Field(..., ge=10, le=99)
+    edad: int
     afinidad_magica: AfinidadMagica
 
     @validator('nombre', 'apellido')
@@ -29,6 +29,11 @@ class SolicitudBase(BaseModel):
         assert id_value.isalnum(), 'must contain only letters and numbers'
         assert 5 <= len(id_value) <= 10, 'must be between 5 and 10 characters or less'
         return id_value
+
+    @validator('edad')
+    def edad_must_be_two_digits(cls, int_value):
+        assert isinstance(int_value, int) and 5 <= int_value <= 99, 'must be a valid age (5-99)'
+        return int_value
 
 
 class SolicitudCreate(SolicitudBase):
