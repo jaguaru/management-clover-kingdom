@@ -31,6 +31,36 @@ def create_grimorio(db: Session, grimorio: schema.GrimorioCreate, solicitud_id: 
     return create_db_grimorio
 
 
+def assign_grimorio(db: Session, solicitud_id: int):
+    """
+    Assigns a Grimorio to a Solicitud based on Escudo rarity.
+    """
+
+    grimorios = [
+        {"tipo_trebol": "1 hoja", "rareza": "comun", "magia": "normal", "escudo": 7},
+        {"tipo_trebol": "2 hojas", "rareza": "raro", "magia": "bsica", "escudo": 28},
+        {"tipo_trebol": "3 hojas", "rareza": "inusual", "magia": "intermedia", "escudo": 50},
+        {"tipo_trebol": "4 hojas", "rareza": "super inusual", "magia": "avanzada", "escudo": 84},
+        {"tipo_trebol": "5 hojas", "rareza": "extra epico", "magia": "legendaria", "escudo": 100},
+    ]
+
+    types = [g["tipo_trebol"] for g in grimorios]
+    shields = [g["escudo"] for g in grimorios]
+
+    selected_type = random.choices(types, shields=shields, k=1)[0]
+
+    selected_grimorio = next(filter(lambda g: g["tipo_trebol"] == selected_type, grimorios))
+
+    grimorio_data = schemas.GrimorioCreate(
+        tipo_trebol=selected_grimorio["tipo_trebol"],
+        rareza=selected_grimorio["rareza"],
+        magia=selected_grimorio["magia"],
+        escudo=selected_grimorio["escudo"]
+    )
+
+    return create_grimorio(db=db, grimorio=grimorio_data, solicitud_id=solicitud_id)
+
+
 def get_solicitud(db: Session, solicitud_id: int):
     """Get a solicitud by its ID."""
     return db.query(models.Solicitud).filter(models.Solicitud.id == solicitud_id).first()
