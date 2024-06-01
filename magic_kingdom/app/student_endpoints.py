@@ -95,7 +95,7 @@ def update_estado_solicitud(solicitud_id: int, estatus: str, db: Session = Depen
     except Exception as _except:
         return JSONResponse(
             status_code=400,
-            content={"message": "Could not add this request!", "error": _except}
+            content={"message": "Could not update estatus this request!", "error": _except}
         )
 
 
