@@ -107,6 +107,9 @@ def update_estado_solicitud(solicitud_id: int, estatus: str, db: Session = Depen
 
 @router.get("/solicitudes/", response_model=List[schema.Solicitud])
 def read_solicitudes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """
+    Read existing student Solicitudes.
+    """
 
     try:
         get_all_db_solicitudes = crud.get_solicitudes(db=db, skip=skip, limit=limit)
