@@ -21,6 +21,10 @@ def get_solicitud(db: Session, solicitud_id: int):
     return db.query(models.Solicitud).filter(models.Solicitud.id == solicitud_id).first()
 
 
+def get_solicitudes(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Solicitud).offset(skip).limit(limit).all()
+
+
 def update_solicitud(db: Session, solicitud_id: int, solicitud: schema.SolicitudCreate):
     """Update an existing solicitud in the database."""
     update_db_solicitud = get_solicitud(db, solicitud_id)
