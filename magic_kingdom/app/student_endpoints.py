@@ -67,7 +67,7 @@ def update_solicitud(solicitud_id: int, solicitud: schema.SolicitudCreate, db: S
     except Exception as _except:
         return JSONResponse(
             status_code=400,
-            content={"message": "Could not update this request!", "error": str(_except)}
+            content={"message": "Could not update this Solicitud!", "error": str(_except)}
         )
 
 
