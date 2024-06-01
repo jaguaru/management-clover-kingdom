@@ -28,3 +28,10 @@ class Database:
 DATABASE_URL = "postgresql://jaguaru:Jaguar12345@localhost/magic_kingdom_db"
 
 db = Database(DATABASE_URL)
+
+def get_db():
+    db_session = db.get_session()
+    try:
+        yield db_session
+    finally:
+        db_session.close()
