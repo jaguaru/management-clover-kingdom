@@ -126,3 +126,31 @@ def read_solicitudes(skip: int = 0, limit: int = 100, db: Session = Depends(get_
             status_code=500,
             content={"message": "An error occurred while fetching Solicitudes", "error": str(_except)}
         )
+
+
+@router.delete("/solicitud/{solicitud_id}", response_model=schema.Solicitud)
+def delete_solicitud(solicitud_id: int, db: Session = Depends(get_db)):
+
+    get_solicitud_by_id = crud.get_solicitud(db, solicitud_id=solicitud_id)
+    
+    if get_solicitud_by_id is None:
+        return JSONResponse(
+            status_code=404,
+            content={"message": "Could not find ID Solicitud!"}
+        )
+
+    try:
+        delete_db_solicitud = crud.delete_solicitud(db=db, solicitud_id=solicitud_id)
+        return JSONResponse(
+            status_code=201,
+            content={
+                "message": "Solicitud deleted successfully!",
+                "solicitud_id": delete_db_solicitud.id
+            }
+        )
+
+    except Exception as _except:
+        return JSONResponse(
+            status_code=500,
+            content={"message": "Could not delete this Solicitud!", "error": str(_except)}
+        )
