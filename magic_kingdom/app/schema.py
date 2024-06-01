@@ -12,9 +12,9 @@ class AfinidadMagica(str, Enum):
 
 
 class SolicitudBase(BaseModel):
-    nombre: constr(max_length=20, regex="^[a-zA-Z]+$")
-    apellido: constr(max_length=20, regex="^[a-zA-Z]+$")
-    identificacion: constr(max_length=10, regex="^[a-zA-Z0-9]+$")
+    nombre: constr(max_length=20)
+    apellido: constr(max_length=20)
+    identificacion: constr(max_length=10)
     edad: int = Field(..., ge=10, le=99)
     afinidad_magica: AfinidadMagica
 
