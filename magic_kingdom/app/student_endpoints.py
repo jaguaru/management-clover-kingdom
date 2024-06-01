@@ -23,7 +23,7 @@ def create_solicitud(solicitud: schema.SolicitudCreate, db: Session = Depends(ge
     if existing_solicitud:
         return JSONResponse(
             status_code=400,
-            content={"message": "The request with this identification number already exists!"}
+            content={"message": "The Solicitud with this identification number already exists!"}
         )
 
     try:
