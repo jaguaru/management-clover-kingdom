@@ -26,12 +26,12 @@ def create_solicitud(solicitud: schema.SolicitudCreate, db: Session = Depends(ge
         )
 
     try:
-        db_solicitud = crud.create_solicitud(db=db, solicitud=solicitud)
+        create_db_solicitud = crud.create_solicitud(db=db, solicitud=solicitud)
         return JSONResponse(
             status_code=201,
             content={
                 "message": "Request added successfully!", 
-                "identificacion": db_solicitud.identificacion
+                "solicitud_id": create_db_solicitud.id
             }
         )
 
