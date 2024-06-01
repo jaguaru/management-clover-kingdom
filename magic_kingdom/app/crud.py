@@ -2,6 +2,13 @@ from sqlalchemy.orm import Session
 from . import models, schema
 
 
+def to_dict(obj):
+    """
+    Convierte un objeto SQLAlchemy en un diccionario.
+    """
+    return {c.name: getattr(obj, c.name) for c in obj.__table__.columns}
+
+
 def get_solicitud_by_identificacion(db: Session, identificacion: str):
     """Get a solicitud by its identificacion."""
     return db.query(models.Solicitud).filter(models.Solicitud.identificacion == identificacion).first()
