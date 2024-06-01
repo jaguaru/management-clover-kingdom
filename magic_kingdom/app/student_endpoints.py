@@ -158,7 +158,7 @@ def read_asignaciones(skip: int = 0, limit: int = 100, db: Session = Depends(get
             solicitud_grimorios = {
                 "id": x_solicitud.id,
                 "identificacion": x_solicitud.identificacion,
-                "grimorios": [schemas.Grimorio.from_orm(grimorio).dict() for grimorio in grimorios]
+                "grimorios": [schema.Grimorio.from_orm(grimorio).dict() for grimorio in grimorios]
             }
             result.append(solicitud_grimorios)
         
