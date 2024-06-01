@@ -152,19 +152,16 @@ def read_asignaciones(skip: int = 0, limit: int = 100, db: Session = Depends(get
                 status_code=200,
                 content={"message": "Asignaciones  not found!"}
             )
-        
-        #solicitudes_dict = [crud.to_dict(solicitud) for solicitud in get_all_db_solicitudes]
-        #print(' ----  solicitudes_dict  ', solicitudes_dict)
 
-        #result = []
-        #for solicitud in get_all_db_solicitudes:
-        #    #grimorios = db.query(models.Grimorio).filter(models.Grimorio.solicitud_id == solicitud.id).all()
-        #    get_grimorios = crud.get_grimorios(db=db, solicitud_id=solicitud.id)
-        #    result.append({
-        #        "id": solicitud.id,
-        #        "identificacion": solicitud.identificacion,
-        #        "grimorios": get_grimorios
-        #    })
+        result = []
+        for x_solicitud in get_all_db_solicitudes:
+            grimorios = crud.get_grimorios_by_solicitud_id(db=db, solicitud_id=x_solicitud.id)
+            solicitud_grimorios = {
+                "id": x_solicitud.id,
+                "identificacion": x_solicitud.identificacion,
+                "grimorios": [schemas.Grimorio.from_orm(grimorio).dict() for grimorio in grimorios]
+            }
+            result.append(solicitud_grimorios)
         
         return JSONResponse(
             status_code=200,
