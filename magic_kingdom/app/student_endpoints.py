@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
@@ -98,23 +99,26 @@ def update_estado_solicitud(solicitud_id: int, estatus: str, db: Session = Depen
         )
 
 
-@router.get("/solicitudes/", response_model=list[schema.Solicitud])
+@router.get("/solicitudes/", response_model=List[schema.Solicitud])
 def read_solicitudes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
     try:
         get_all_db_solicitudes = crud.get_solicitudes(db=db, skip=skip, limit=limit)
-        
+
         if not get_all_db_solicitudes:
             return JSONResponse(
-                status_code=200,
+                status_code=404,
                 content={"message": "Solicitudes not found!"}
             )
         
-        solicitudes_list = [schema.Solicitud.from_orm(solicitud).dict() for solicitud in get_all_db_solicitudes]
-                
+        solicitudes_dict = [to_dict(solicitud) for solicitud in get_all_db_solicitudes]
+
         return JSONResponse(
-            status_code=200,
-            content=solicitudes_list
+            status_code=201,
+            content={
+                "message": "Solicitudes retrieved successfully!", 
+                "solicitudes": solicitudes_list
+            }
         )
 
     except Exception as _except:
