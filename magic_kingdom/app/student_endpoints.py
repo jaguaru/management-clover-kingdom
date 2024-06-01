@@ -145,7 +145,6 @@ def read_asignaciones(skip: int = 0, limit: int = 100, db: Session = Depends(get
 
     try:
         get_all_db_solicitudes = crud.get_solicitudes(db=db, skip=skip, limit=limit)
-        print(' ----  get_all_db_solicitudes  ', get_all_db_solicitudes)
         
         if not get_all_db_solicitudes:
             return JSONResponse(
