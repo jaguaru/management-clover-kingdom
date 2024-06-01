@@ -22,6 +22,7 @@ def get_solicitud(db: Session, solicitud_id: int):
 
 
 def update_solicitud(db: Session, solicitud_id: int, solicitud: schema.SolicitudCreate):
+    """Update an existing solicitud in the database."""
     update_db_solicitud = get_solicitud(db, solicitud_id)
     if update_db_solicitud:
         for key, value in solicitud.dict().items():
