@@ -1,30 +1,44 @@
-import unittest
-from fastapi.testclient import TestClient
-from unittest.mock import MagicMock, patch
-from app.main import app
-from app.crud import get_solicitud_by_identificacion, create_solicitud, get_solicitud, update_solicitud, delete_solicitud
-from app.database import get_db
-from app.schema import Solicitud, SolicitudCreate
+import pytest
+from unittest.mock import MagicMock
+from sqlalchemy.orm import Session
+from app import crud, schema, models
 
-client = TestClient(app)
+@pytest.fixture
+def mock_db_session():
+    return MagicMock(spec=Session)
 
-class TestStudentEndpoints(unittest.TestCase):
+def test_get_solicitud_by_identificacion(mock_db_session):
+    mock_identificacion = "123456"
+    mock_solicitud = models.Solicitud(
+        id=1, nombre="Juan", apellido="Perez", identificacion=mock_identificacion, edad=25, afinidad_magica="Fuego"
+    )
+    mock_db_session.query.return_value.filter.return_value.first.return_value = mock_solicitud
 
-    def setUp(self):
-        self.mock_db = MagicMock()
-        app.dependency_overrides[get_db] = lambda: self.mock_db
+    result = crud.get_solicitud_by_identificacion(mock_db_session, mock_identificacion)
 
-    def tearDown(self):
-        app.dependency_overrides = {}
+    assert result == mock_solicitud
+    
 
-    def test_create_solicitud(self):
-        self.mock_db.get_solicitud_by_identificacion.return_value = None
-        self.mock_db.create_solicitud.return_value = Solicitud(id=1, identificacion="123456789")
+def test_create_solicitud(mock_db_session):
+    solicitud_data = schema.SolicitudCreate(
+        nombre="Juano", apellido="Perez", identificacion="123456", edad=25, afinidad_magica="Fuego"
+    )
+    created_solicitud = models.Solicitud(id=1, **solicitud_data.dict())
+    mock_db_session.add.side_effect = lambda x: x
+    mock_db_session.commit.side_effect = None
+    mock_db_session.refresh.side_effect = lambda x: None
 
-        response = client.post("/api/solicitud/", json={"identificacion": "123456789"})
+    mock_assign_grimorio = MagicMock()
+    crud.assign_grimorio = mock_assign_grimorio
 
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json(), {
-            "message": "Solicitud added successfully!",
-            "solicitud_id": 1
-        })
+    result = crud.create_solicitud(mock_db_session, solicitud_data)
+
+    assert result.nombre == solicitud_data.nombre
+    assert result.apellido == solicitud_data.apellido
+    assert result.identificacion == solicitud_data.identificacion
+    assert result.edad == solicitud_data.edad
+    assert result.afinidad_magica == solicitud_data.afinidad_magica
+    mock_db_session.add.assert_called_once_with(result)
+    mock_db_session.commit.assert_called_once()
+    mock_db_session.refresh.assert_called_once_with(result)
+    mock_assign_grimorio.assert_called_once_with(mock_db_session, result.id)
