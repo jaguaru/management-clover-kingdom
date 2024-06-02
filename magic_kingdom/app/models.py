@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Enum, ForeignKey
 from sqlalchemy.orm import relationship
-from .database import db
+from database import db
 
 
 class Solicitud(db.Base):

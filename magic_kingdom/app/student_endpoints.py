@@ -2,8 +2,9 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from . import crud, schema
-from .database import get_db
+import crud
+import schema
+from database import get_db
 
 
 router = APIRouter()
