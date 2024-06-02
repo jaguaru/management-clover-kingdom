@@ -1,10 +1,10 @@
 import unittest
 from fastapi.testclient import TestClient
 from unittest.mock import MagicMock, patch
-from ..main import app
-from ..app.crud import get_solicitud_by_identificacion, create_solicitud, get_solicitud, update_solicitud, delete_solicitud
-from ..app.database import get_db
-from ..app.schema import Solicitud, SolicitudCreate
+from app.main import app
+from app.crud import get_solicitud_by_identificacion, create_solicitud, get_solicitud, update_solicitud, delete_solicitud
+from app.database import get_db
+from app.schema import Solicitud, SolicitudCreate
 
 client = TestClient(app)
 
