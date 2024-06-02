@@ -1,13 +1,13 @@
 FROM python:3.9-slim
 
-WORKDIR /app
+WORKDIR /magic_kingdom/app
 
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./app ./app
-COPY main.py .
+COPY ./magic_kingdom/app ./magic_kingdom/app
+COPY ./magic_kingdom/app/main.py .
 
 EXPOSE 8000
 
