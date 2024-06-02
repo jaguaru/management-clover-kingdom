@@ -169,7 +169,31 @@ Check the Grimorios assignments that each student has.
         {
             "id": 28,
             "identificacion": ABCD7071,
-            "grimorios": [...]
+            "grimorios": [
+                            {
+                                "id":27,
+                                "identificacion":"ABCD7011",
+                                "grimorios":[{
+                                                "tipo_trebol":"5 hojas",
+                                                "rareza":"extra epico",
+                                                "magia":"legendaria",
+                                                "escudo":100,"id":5,
+                                                "solicitud_id":27
+                                            }]
+                            },
+                            {
+                                "id":28,
+                                "identificacion":"ABCD7071",
+                                "grimorios":[{
+                                                "tipo_trebol":"3 hojas",
+                                                "rareza":"inusual",
+                                                "magia":"intermedia",
+                                                "escudo":50,
+                                                "id":6,
+                                                "solicitud_id":28
+                                            }]
+                            }
+                         ]
         }
 
 ### Read Asignaciones: 
