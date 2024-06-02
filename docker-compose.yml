@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: jaguaru
+      POSTGRES_PASSWORD: Jaguar12345
+      POSTGRES_DB: magic_kingdom_db
+    ports:
+      - "5432:5432"
+
+  web:
+    build: .
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://jaguaru:Jaguar12345@db/magic_kingdom_db"
